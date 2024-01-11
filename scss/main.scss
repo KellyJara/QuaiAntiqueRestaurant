@@ -1,2 +1,37 @@
 @import url("/node_modules/font/bootstrap-icons.css");
 @import 'custom';
+
+html{
+  position: relative;
+  min-height: 100%;
+}
+
+footer.footer{
+  padding: 15px;
+  position: absolute;
+  bottom: 0;
+  width:100%;
+}
+main{
+  margin-bottom: 250px;
+}
+.hero.scene{
+  position:relative;
+  &::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    background-image: url(../Imagenes/composition-food.jpg);
+    background-size: cover;
+    filter: brightness(0.3);
+}
+*{
+  //positioner les éléments devant le :: before
+  position: relative;
+}
+.hero.scene{
+  height: 300px;
+}
+}
+

@@ -11,6 +11,7 @@ export const allRoutes = [
     new Route("/signup", "Inscription", "/auth/signup.html"),
     new Route("/account", "Mon compte", "/auth/account.html"),
     new Route("/editPassword", "Changement de mot de passe", "/auth/editPassword.html"),
+    new Route("/allResa", "Vos réservations", "/pages/reservations/allResa.html"),
 
   ];
 

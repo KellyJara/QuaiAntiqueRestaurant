@@ -1,4 +1,5 @@
-alert("coucou");
+
+
 //Implémenter le JS de ma page
 
 const InputNom = document.getElementById("NomInput");
@@ -9,10 +10,11 @@ const InputValidatePassword = document.getElementById("ValidatePasswordInput");
 const btnValidation = document.getElementById("btn-validation-inscription");
 
 InputNom.addEventListener("keyup", validateForm);
-PrenomInput.addEventListener("keyup", validateForm);
-EmailInput.addEventListener("keyup", validateForm);
-PasswordInput.addEventListener("keyup", validateForm);
-ValidatePasswordInput.addEventListener("keyup", validateForm);
+InputPrenom.addEventListener("keyup", validateForm);
+InputEmail.addEventListener("keyup", validateForm);
+InputPassword.addEventListener("keyup", validateForm);
+InputValidatePassword.addEventListener("keyup", validateForm);
+btnValidation.addEventListener('click',InscrireUtilisateur);
 
 function validateForm(){
      const nomOK = validateRequired(InputNom);
@@ -20,8 +22,9 @@ function validateForm(){
      const mailOK= validateMail(InputEmail);
      const passwordOK= validatePassword(InputPassword);
      const passwordConfirmOK= validateConfirmationPassword(InputPassword, InputValidatePassword);
+     btnValidation.disabled = true;
 
-     if(nomOK && prenomOK && mailOK && passwordConfirmOK){
+     if(nomOK && prenomOK && mailOK && passwordOK && passwordConfirmOK){
       btnValidation.disabled = false;
      }
      else{
@@ -32,7 +35,7 @@ function validateForm(){
 function validateMail(input){
   //Définir mon regex
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const mailUser= input.value;
+  const mailUser= InputEmail.value;
   if(mailUser.match(emailRegex)){
     input.classList.add("is-valid");
     input.classList.remove("is-invalid");
@@ -46,7 +49,7 @@ function validateMail(input){
 }
 
 function validateRequired (input){
-  if(input.value != ''){
+  if(input.value !=''){
      input.classList.add("is-valid");
      input.classList.remove("is-invalid");
      return true;
@@ -61,7 +64,7 @@ function validateRequired (input){
 function validatePassword(input){
   //Définir mon regex
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
-  const passwordUser= input.value;
+  const passwordUser= InputPassword.value;
   if(passwordUser.match(passwordRegex)){
     input.classList.add("is-valid");
     input.classList.remove("is-invalid");
@@ -87,3 +90,28 @@ function validateConfirmationPassword(inputPwd, inputConfirmPwd){
   }
 }
 
+function InscrireUtilisateur(){
+
+let myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+let raw = JSON.stringify({
+  "firstName": "Testfetch",
+  "lastName": "Testfetch",
+  "email": "testdepuisquaiantique@email.com",
+  "password": "Azerty11"
+});
+
+let requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("localhost:3000/signup", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
+}
